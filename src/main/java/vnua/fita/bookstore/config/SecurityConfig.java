@@ -31,6 +31,12 @@ public class SecurityConfig {
 		urlPatterns2.add("/deleteBook");
 		urlPatterns2.add("/editBook");
 		mapConfig.put((byte) 1, urlPatterns2);
+		
+//		List<String> urlPatterns3=new ArrayList<String>();
+//		urlPatterns2.add("/shipperHome");
+//		urlPatterns2.add("/shipperHome1");
+//		urlPatterns2.add("/shipperHome2");
+//		mapConfig.put((byte) 2, urlPatterns3);
 	}
 	
 	public static boolean checkPermission(byte role,String servletPath) {

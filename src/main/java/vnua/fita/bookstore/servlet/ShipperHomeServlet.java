@@ -22,7 +22,7 @@ import vnua.fita.bookstore.utils.MyUtils;
 /**
  * Servlet implementation class ShipperHomeServlet
  */
-@WebServlet(urlPatterns = {"/shipperHome","/shipperHome1","/shipperHome2","/shipperHome3"})
+@WebServlet(urlPatterns = {"/shipperHome","/shipperHome1","/shipperHome2","/shipperHome3","/shipperHomeSearch"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
 maxFileSize = 1024 * 1024 * 10, // 10MB
 maxRequestSize = 1024 * 1024 * 20) // 20MB
@@ -44,23 +44,13 @@ public class ShipperHomeServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		String keyword = request.getParameter("keyword");
 		String servletPath = request.getServletPath();
 		String pathInfo = MyUtils.getPathInfoFromServletPath(servletPath);
 		String errors = null;
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		if("shipperHome".equals(pathInfo)) {
-			if (keyword != null) {
-				BookAndOrder list = BookDao.listAllOrder_2_Sp(keyword);
-				
-				request.setAttribute("errors", errors);
-				request.setAttribute("bookList", list);
-				RequestDispatcher rd = this.getServletContext()
-						.getRequestDispatcher("/Views/shipperHome.jsp");
-				rd.forward(request, response);
-			}else {
-				List<BookAndOrder> list = BookDao.listAllOrder_2();
+			List<BookAndOrder> list = BookDao.listAllOrder_2();
 				if (list.isEmpty()) {
 					errors = "Không thể lấy dữ liệu";
 				}
@@ -69,7 +59,6 @@ public class ShipperHomeServlet extends HttpServlet {
 				RequestDispatcher rd = this.getServletContext()
 						.getRequestDispatcher("/Views/shipperHome.jsp");
 				rd.forward(request, response);
-			}
 		}
 		if("shipperHome1".equals(pathInfo)) {
 			List<BookAndOrder> list = BookDao.listAllOrder_3();
@@ -176,6 +165,18 @@ public class ShipperHomeServlet extends HttpServlet {
 			order.setOrderStatus(5);
 			Boolean order2 = BookDao.updateOrderShipper(order); // lưu chuyển trạng thái đơn
 			response.sendRedirect(request.getContextPath() + "/shipperHome");
+		}
+		String keyword = request.getParameter("keyword");
+		if ("shipperHomeSearch".equals(pathInfo)) {
+			if (keyword != null) {
+				BookAndOrder list = ShipperDao.listAllOrder_2_Sp(keyword);
+				
+				request.setAttribute("bookList", list);
+				request.setAttribute("keyword", keyword);
+				RequestDispatcher rd = this.getServletContext()
+						.getRequestDispatcher("/Views/shipperHome.jsp");
+				rd.forward(request, response);
+			}
 		}
 	}
 

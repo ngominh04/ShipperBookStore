@@ -10,14 +10,20 @@
 </head>
 <body>
 	<div style="background-color: #E0E0E0;height: 75px;padding: 1rem">
-		<div style="float: left;">
+		<div style="float: left;" >
 			<h2>Web shipper</h2>
+		</div>
+		<div align="center" style="margin-bottom: -2rem">
+			<form action="shipperHomeSearch" method="post" enctype="multipart/form-data">
+				Tìm đơn hàng:<input type="search" name="keyword" id="keyword" style="width: 300px">
+				<button type="submit">Search</button>
+			</form>
 		</div>
 		<div style="float: right;;text-align: right;">
 		
-		<c:if test="${empty loginedUser }">
-			<a href="${pageContext.request.contextPath }/login">Đăng nhập</a>
-		</c:if>
+			<c:if test="${empty loginedUser }">
+				<a href="${pageContext.request.contextPath }/login">Đăng nhập</a>
+			</c:if>
 		
 			<c:if test="${not empty loginedUser }">
 				Xin chào <b>${loginedUser.fullname }</b>
@@ -25,7 +31,6 @@
 				<a href="${pageContext.request.contextPath }/logout">Đăng xuất</a>
 			</c:if>
 			<br>
-			Tìm đơn :<input name="search" onchange="activeAsLink('shipperHome?keyword=' +this.value);">
 		</div>
 	</div>
 	<script type="text/javascript" src="${pageContext.request.contextPath }/js/bookStore_script.js"></script>

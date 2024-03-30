@@ -12,9 +12,13 @@
 	<jsp:include page="_headerShipper.jsp"></jsp:include>
 	<jsp:include page="_menuShipper.jsp"></jsp:include>
 	<div align="center">
-		<h3>Danh sách các đơn hàng</h3>
-		
+		<c:if test="${keyword ==null}">
+			<h3>Danh sách các đơn hàng</h3>
+		</c:if>
 		<p style="color: red">${errors }</p>
+		<c:if test="${keyword !=null }">
+			<span style="color: red"><b>Bạn vừa tìm kiếm theo mã đơn :${keyword}</b></span>
+		</c:if>
 		
 		<table border="1px">
 			<tr>
@@ -23,9 +27,45 @@
 				<th>Số điện thoại</th>
 				<th>Giá Tiền</th>
 				<th>Ngày đặt</th>
+				<th>Trạng thái đơn</th>
 				<th colspan="3" width="120px">Thao tác</th>
 			</tr>
-			<c:forEach items="${bookList}" var="book">
+			<c:if test="${keyword !=null}">
+				<tr>
+					<td>${bookList.orderNo}</td>
+					<td>${bookList.fullname}</td>
+					<td>${bookList.mobile} </td>
+					<td><fmt:formatNumber type="number" maxFractionDigits="0" value="${bookList.totalCost}"/><sup>đ</sup></td>
+					<td><fmt:formatDate value="${bookList.orderDate}" pattern="dd-MM-yyyy HH:mm"/> </td>
+					
+					<c:if test="${bookList.orderStatus ==2}">
+						<td align="center">Đơn cần giao</td>
+						<td align="center">
+							<a href="detailShipper?orderNo=${bookList.orderNo }&orderStatus=2">Xem chi tiết</a>
+						</td>
+					</c:if>
+					<c:if test="${bookList.orderStatus ==3}">
+					<td align="center">Đơn cần đã giao thành công</td>
+						<td align="center">
+							<a href="detailShipper?orderNo=${bookList.orderNo }&orderStatus=3">Xem chi tiết</a>
+						</td>
+					</c:if>
+					<c:if test="${bookList.orderStatus ==4}">
+						<td align="center">Đơn cần trả</td>
+						<td align="center">
+							<a href="detailShipper?orderNo=${book.orderNo }&orderStatus=3">Xem chi tiết</a>
+						</td>
+					</c:if>
+					<c:if test="${bookList.orderStatus ==5}">
+					<td align="center">Đơn đã trả thành công</td>
+						<td align="center">
+							<a href="detailShipper?orderNo=${book.orderNo }&orderStatus=5">Xem chi tiết</a>
+						</td>
+					</c:if>
+				</tr>
+			</c:if>
+			<c:if test="${keyword == null }">
+				<c:forEach items="${bookList}" var="book">
 				<tr>
 					<td>${book.orderNo}</td>
 					<td>${book.fullname}</td>
@@ -34,21 +74,25 @@
 					<td><fmt:formatDate value="${book.orderDate}" pattern="dd-MM-yyyy HH:mm"/> </td>
 					
 					<c:if test="${book.orderStatus ==2}">
+					<td align="center">Đơn <span style="color: red">cần giao</span></td>
 						<td align="center">
 							<a href="detailShipper?orderNo=${book.orderNo }&orderStatus=2">Xem chi tiết</a>
 						</td>
 					</c:if>
 					<c:if test="${book.orderStatus ==3}">
+					<td align="center">Đơn cần <span style="color: red">đã giao</span>  thành công</td>
 						<td align="center">
 							<a href="detailShipper?orderNo=${book.orderNo }&orderStatus=3">Xem chi tiết</a>
 						</td>
 					</c:if>
 					<c:if test="${book.orderStatus ==4}">
+					<td align="center">Đơn <span style="color: red">cần trả</span> </td>
 						<td align="center">
 							<a href="detailShipper?orderNo=${book.orderNo }&orderStatus=3">Xem chi tiết</a>
 						</td>
 					</c:if>
 					<c:if test="${book.orderStatus ==5}">
+					<td align="center">Đơn <span style="color: red">đã trả</span> thành công</td>
 						<td align="center">
 							<a href="detailShipper?orderNo=${book.orderNo }&orderStatus=5">Xem chi tiết</a>
 						</td>
@@ -56,6 +100,8 @@
 					
 				</tr>
 			</c:forEach>
+			</c:if>
+			
 		</table>
 		<br>
 		
