@@ -15,7 +15,15 @@
 		</div>
 		<div align="center" style="margin-bottom: -2rem">
 			<form action="shipperHomeSearch" method="post" enctype="multipart/form-data">
-				Tìm đơn hàng:<input type="search" name="keyword" id="keyword" style="width: 300px">
+			<c:if test="${keyword == null}">
+				Tìm đơn hàng:<input type="search" name="keyword" 
+							id="keyword" style="width: 300px" placeholder="Nhập đơn">
+			</c:if>
+			<c:if test="${keyword != null}">
+				Tìm đơn hàng:<input type="search" name="keyword" 
+							id="keyword" style="width: 300px" value="${keyword }" placeholder="${keyword }">
+			</c:if>
+				
 				<button type="submit">Search</button>
 			</form>
 		</div>

@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import vnua.fita.bookstore.bean.BookAndOrder;
 import vnua.fita.bookstore.bean.Order;
 import vnua.fita.bookstore.frombean.LoginFrom;
+import vnua.fita.bookstore.model.BookDao;
 import vnua.fita.bookstore.model.OrderDao;
 import vnua.fita.bookstore.model.UserDao;
 import vnua.fita.bookstore.utils.MyUtils;
@@ -47,8 +49,15 @@ public class CustomerOrderListServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String orderNo = request.getParameter("orderNo");
+		BookAndOrder order = BookDao.getOrder(orderNo);
+		
+		order.setOrderStatus(4);
+		
+		Boolean order2 = BookDao.updateOrderShipper(order); // lưu chuyển trạng thái đơn
+		RequestDispatcher rd = this.getServletContext()
+				.getRequestDispatcher("/Views/customerOrderListView.jsp");
+		rd.forward(request, response);
 	}
 
 }

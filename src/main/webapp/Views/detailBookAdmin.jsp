@@ -79,12 +79,28 @@
 			<sup>đ</sup>
 		</b>
 	</div>
+			<c:if test="${order.orderStatus ==3}">
+				<br><span>Ảnh giao hàng thành công</span>
+				<br>
+				<img alt="imgShipper" src="${img.image }" width="150">
+			</c:if>
+			<c:if test="${order.orderStatus ==5}">
+					<br><span>Ảnh trả hàng thành công</span>
+					<br>
+					<img alt="imgShipper" src="${img.image }" width="150"><br>
+					<p>Lý do trả hàng: ${img.reason }</p>
+				</c:if>
+				<br>
+				<br>
+				
+				<%--
 				<c:if test="${order.orderStatus ==1}">
 					<a href="confirmOrder1?orderNo=${order.orderNo}">Xác Nhận đơn</a>
 				</c:if>
 				<c:if test="${order.orderStatus ==2}">
 					<a href="confirmOrder2?orderNo=${order.orderNo}">Xác nhận đã giao</a>
 				</c:if>
+				 --%>
 				
 				<a href="adminHome">Tiếp tục xem tiếp</a>				
 		

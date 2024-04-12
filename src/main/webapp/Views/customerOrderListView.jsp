@@ -86,6 +86,13 @@
 											type="number" maxFractionDigits="0" value="${orderOfCustomer.totalCost }"></fmt:formatNumber>
 								</span> <sup>đ</sup>
 								</b>
+								<c:if test="${orderOfCustomer.orderStatus == 7 }">
+									<form action="customerOrderList" method="post" enctype="multipart/form-data"> 
+										<input type="hidden" name="orderNo" id="orderNo" value="${orderOfCustomer.orderNo}">
+										<button type="submit">Trả hàng</button>
+									</form>
+								</c:if>
+								
 							</div> 
 						</td>
 					</tr>

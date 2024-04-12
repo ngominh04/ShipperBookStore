@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import vnua.fita.bookstore.bean.Book;
+import vnua.fita.bookstore.bean.BookAndOrder;
 import vnua.fita.bookstore.model.BookDao;
 
 /**
@@ -63,7 +64,6 @@ public class ClientHomeServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }

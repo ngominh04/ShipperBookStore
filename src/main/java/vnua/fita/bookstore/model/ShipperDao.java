@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import vnua.fita.bookstore.bean.BookAndOrder;
+import vnua.fita.bookstore.bean.Order;
 import vnua.fita.bookstore.bean.Shipper;
 import vnua.fita.bookstore.database.Database;
 
@@ -35,7 +36,7 @@ public class ShipperDao {
 			PreparedStatement preStatement = jdbcConnection.prepareStatement(sql);
 			preStatement.setInt(1, shipper.getOrderId());
 			preStatement.setString(2, shipper.getImage());
-			preStatement.setString(0, shipper.getReason());
+			preStatement.setString(3, shipper.getReason());
 			
 			insertResult = preStatement.executeUpdate() > 0;
 		} catch (SQLException e) {
@@ -76,5 +77,27 @@ public class ShipperDao {
 			e.printStackTrace();
 		}
 		return book;
+	}
+	public static Shipper imgShipper(String orderNo) {
+		String sql ="select * from tblorder_shipper\r\n"
+				+ "    inner join tblorder t on tblorder_shipper.order_id = t.order_id\r\n"
+				+ "where t.order_no = ?";
+		Shipper shipper = null;
+		Connection connection = Database.getConnection();
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, orderNo);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				String img = resultSet.getString("image");
+				String reason = resultSet.getString("reason");
+				shipper = new Shipper( img,reason);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return shipper;
 	}
 }

@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import vnua.fita.bookstore.bean.Book;
+import vnua.fita.bookstore.bean.Shipper;
 import vnua.fita.bookstore.model.BookDao;
+import vnua.fita.bookstore.model.ShipperDao;
 
 /**
  * Servlet implementation class DetailBookServlet
@@ -37,6 +39,7 @@ public class DetailBookServlet extends HttpServlet {
 		List<String> errors = new ArrayList<String>();
 		String bookIdStr = request.getParameter("bookId");
 		int bookId = -1;
+		 
 		try {
 			bookId = Integer.parseInt(bookIdStr);
 		} catch (Exception e) {
@@ -48,6 +51,7 @@ public class DetailBookServlet extends HttpServlet {
 			if(book == null) {
 				System.out.println("ko có sách");
 			}else {
+				
 				request.setAttribute("book", book);
 				RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/Views/detailBook.jsp");
 				dispatcher.forward(request, response);

@@ -82,12 +82,38 @@
 			<c:if test="${order.orderStatus ==2}">
 				<form action="shipperHome" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="orderNo" value="${order.orderNo}">
+						<img id="bookImage" width="150"><br>
+						Chụp ảnh đã giao :<input type="file" name="file" accept="image/*"
+						onchange="loadImage(event)" />
+					<button type="submit">Xác nhận giao thành công</button>
+				</form>
+				<form action="shipperHome2" method="post" enctype="multipart/form-data">
+					
+					<input type="hidden" name="orderNo" value="${order.orderNo}">
+					<img id="bookImage" width="150"><br>
+					Chụp ảnh sản phẩm trả hàng:<input type="file" name="file" accept="image/*"
+					onchange="loadImage(event)" />
+					<br>
+					<label for="reason">Lí do hủy hàng của khách</label><br>
+					<textarea id="reason"  name="reason"  cols="40" rows="5"></textarea>
+					<br>
+					
+					<button type="submit">Xác nhận trả hàng</button>
+				</form>
+				
+				<%--
+				<input type="hidden" name="orderNo" value="${order.orderNo}">
 					<img id="bookImage" width="150"><br>
 					Chụp ảnh đã giao :<input type="file" name="file" accept="image/*"
 					onchange="loadImage(event)" />
-					
-					<button type="submit">Xác nhận giao thành công</button>
-				</form>
+				<a href="/ShipperBookStore/shipperOrder3">Giao hàng thành công</a>
+				<a href="/ShipperBookStore/shipperOrder5">Khách trả hàng</a>
+				 --%>
+			</c:if>
+			<c:if test="${order.orderStatus ==3}">
+				<br><span>Ảnh giao hàng thành công</span>
+				<br>
+				<img alt="imgShipper" src="${img.image }" width="150">
 			</c:if>
 			<c:if test="${order.orderStatus ==4}">
 				<form action="shipperHome2" method="post" enctype="multipart/form-data">
@@ -101,6 +127,12 @@
 					
 					<button type="submit">Xác nhận trả hàng thành công</button>
 				</form>
+			</c:if>
+			<c:if test="${order.orderStatus ==5}">
+				<br><span>Ảnh trả hàng thành công</span>
+				<br>
+				<img alt="imgShipper" src="${img.image }" width="150"><br>
+				<p>Lý do trả hàng: ${img.reason }</p>
 			</c:if>
 			<br>
 			<br>

@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import vnua.fita.bookstore.bean.Book;
 import vnua.fita.bookstore.bean.BookAndOrder;
 import vnua.fita.bookstore.bean.Order;
+import vnua.fita.bookstore.bean.Shipper;
 import vnua.fita.bookstore.model.BookDao;
+import vnua.fita.bookstore.model.ShipperDao;
 import vnua.fita.bookstore.utils.MyUtils;
 
 /**
@@ -92,6 +94,8 @@ public class DetailBookAdminServlet extends HttpServlet {
 				if(book == null) {
 					System.out.println("ko có sách");
 				}else {
+					Shipper img = ShipperDao.imgShipper(orderNo);
+					request.setAttribute("img", img);
 					request.setAttribute("book", book);
 					request.setAttribute("order", order);
 					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/Views/detailBookAdmin.jsp");
@@ -104,6 +108,8 @@ public class DetailBookAdminServlet extends HttpServlet {
 				if(book == null) {
 					System.out.println("ko có sách");
 				}else {
+					Shipper img = ShipperDao.imgShipper(orderNo);
+					request.setAttribute("img", img);
 					request.setAttribute("book", book);
 					request.setAttribute("order", order);
 					RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/Views/detailBookAdmin.jsp");

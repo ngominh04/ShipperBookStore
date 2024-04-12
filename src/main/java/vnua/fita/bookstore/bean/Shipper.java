@@ -46,6 +46,11 @@ public class Shipper {
 		this.image = image;
 		this.reason = reason;
 	}
+	public Shipper(String image,String reason) {
+		super();
+		this.image = image;
+		this.reason = reason;
+	}
 	
 
 }
