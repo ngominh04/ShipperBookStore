@@ -30,9 +30,44 @@
 				<a href="${pageContext.request.contextPath }/cartBook/viewCart">giỏ hàng</a>
 			</c:if>
 			<br>
-			Tìm sách :<input name="search" onchange="activeAsLink('${pageContext.request.contextPath }/clientHome?keyword=' +this.value);">
+			 Tìm sách :<input name="search" placeholder="search bình thường"
+			onchange="activeAsLink('${pageContext.request.contextPath }/clientHome?keyword=' +this.value);">
+			<br>
+			<div style="margin-top: 0.5rem">
+				Tìm sách ajax:<input type="text" name="keyword" value="${keyword }"
+					onkeyup="searchByName(this)" placeholder="search ajax">
+			</div>
+			
 		</div>
 	</div>
 	<script type="text/javascript" src="${pageContext.request.contextPath }/js/bookStore_script.js"></script>
+	<script type="text/javascript">
+		var request;
+		function searchByName(keyword) {
+			
+			 var keyword = keyword.value;
+			 var url = "/ShipperBookStore/clientHome?keyword=" + keyword;
+			
+			 if (window.XMLHttpRequest) {
+			  request = new XMLHttpRequest();
+			 } else if (window.ActiveXObject) {
+			  request = new ActiveXObject("Microsoft.XMLHTTP");
+			 }
+			
+			 try {
+			  request.onreadystatechange = getInfo;
+			  request.open("GET", url, true);
+			  request.send();
+			 } catch (e) {
+			  alert("Unable to connect to server");
+			 }
+		}
+		function getInfo() {
+		 if (request.readyState == 4) {
+		  var val = request.responseText;
+		  document.getElementById('content').innerHTML = val;
+		 }
+		}
+	</script>
 </body>
 </html>

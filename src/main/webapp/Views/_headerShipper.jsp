@@ -26,6 +26,12 @@
 				
 				<button type="submit">Search</button>
 			</form>
+			<%-- --%>
+			<div align="center" style="margin-top: 0.5rem">
+					<input type="text" id="keyword" value="${keyword }" size="45" placeholder="search ajax" onkeyup="searchByName(this)"/>
+			</div>
+			
+			
 		</div>
 		<div style="float: right;;text-align: right;">
 		
@@ -42,5 +48,36 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="${pageContext.request.contextPath }/js/bookStore_script.js"></script>
+	<script type="text/javascript">
+		var request;
+		function searchByName(keyword) {
+			
+			 var keyword = keyword.value;
+			 var url = "/ShipperBookStore/shipperHomeSearch?keyword=" + keyword;
+			
+			 if (window.XMLHttpRequest) {
+			  request = new XMLHttpRequest();
+			 } else if (window.ActiveXObject) {
+			  request = new ActiveXObject("Microsoft.XMLHTTP");
+			 }
+			
+			 try {
+			  request.onreadystatechange = getInfo;
+			  request.open("GET", url, true);
+			  request.send();
+			 } catch (e) {
+			  alert("Unable to connect to server");
+			 }
+		}
+		
+		
+		function getInfo() {
+		 if (request.readyState == 4) {
+		  var val = request.responseText;
+		  document.getElementById('content').innerHTML = val;
+		 }
+		}
+	</script>
+
 </body>
 </html>

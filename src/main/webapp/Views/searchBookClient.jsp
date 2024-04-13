@@ -4,15 +4,8 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Trang chủ phía máy khách</title>
-</head>
 <body>
-	<jsp:include page="_header.jsp"></jsp:include>
-	<jsp:include page="_menu.jsp"></jsp:include>
-	
-	<div align="center" id="content">
+	<div align="center">
 		<h3>Danh sách các cuốn sách</h3>
 		<c:if test="${keyword != null}">
 			Bạn đang tìm kiếm theo từ khóa : <span>${keyword }</span>
@@ -37,9 +30,7 @@
 				</tr>
 			</c:forEach>
 		</table>
-		
-		<c:if test="${empty keyword }">
-			<div style="margin-top: 5px">
+		<div style="margin-top: 5px">
 				<c:if test="${currentPage gt 1 }">
 					<a href="clientHome?page=${curentPage-1 }">Previous</a>
 				</c:if>
@@ -57,7 +48,10 @@
 				<c:if test="${curentPage lt noOfPages }">
 					&nbsp;<a href="clientHome?page=${curentPage + 1 }">Next</a>
 				</c:if>
-			</div>
+		</div>
+		<%-- 
+		<c:if test="${empty keyword }">
+			
 		</c:if>
 		
 		<c:if test="${not empty keyword }">
@@ -82,5 +76,6 @@
 			</div>
 		</c:if>
 	</div>
+	--%>
 </body>
 </html>

@@ -63,57 +63,6 @@ public class DetailShipperServlet extends HttpServlet {
 				dispatcher.forward(request, response);
 			}
 		}
-////		String orderNo = request.getParameter("orderNo");
-//		String reason = request.getParameter("reason");
-//		Part filePart = request.getPart("file");
-//		String imagePath = null;
-//		BookAndOrder order = BookDao.getOrder(orderNo);
-//		if ("shipperOrder3".equals(pathInfo)) {
-//			String fileName = "shipper" + "_" + MyUtils.getTimeLabel()+ MyUtils.extractFileExxtension(filePart);
-//			
-//			String contextPath = getServletContext().getRealPath("/"); // Lấy đường dẫn
-//																		// thực của ứng
-//																		// dụng web
-//			String savePath = contextPath + "img"; // Đường dẫn đến thư mục 'img'
-//			
-//			File fileSaveDir = new File(savePath);
-//			if (!fileSaveDir.exists()) {
-//				fileSaveDir.mkdir(); // Tạo thư mục 'img' nếu nó không tồn tại
-//			}
-//			
-//			String filePath = savePath + File.separator + fileName; // Đường dẫn file cuối
-//																	// cùng để lưu trữ ảnh
-//			filePart.write(filePath); // Lưu file ảnh
-//			imagePath = "img" + File.separator + fileName;
-//			Shipper shipper = new Shipper( order.getOrderId(), imagePath);
-//			Boolean check = ShipperDao.insertShipper(shipper); // lưu lại ảnh shipper
-//			order.setOrderStatus(3);
-//			Boolean order2 = BookDao.updateOrderShipper(order); // lưu chuyển trạng thái đơn
-//			response.sendRedirect(request.getContextPath() + "/shipperHome");
-//		}
-//		if ("shipperOrder5".equals(pathInfo)) {
-//			String fileName = "shipper" + "_" + MyUtils.getTimeLabel()+ MyUtils.extractFileExxtension(filePart);
-//			
-//			String contextPath = getServletContext().getRealPath("/"); // Lấy đường dẫn
-//																		// thực của ứng
-//																		// dụng web
-//			String savePath = contextPath + "img"; // Đường dẫn đến thư mục 'img'
-//			
-//			File fileSaveDir = new File(savePath);
-//			if (!fileSaveDir.exists()) {
-//				fileSaveDir.mkdir(); // Tạo thư mục 'img' nếu nó không tồn tại
-//			}
-//			
-//			String filePath = savePath + File.separator + fileName; // Đường dẫn file cuối
-//																	// cùng để lưu trữ ảnh
-//			filePart.write(filePath); // Lưu file ảnh
-//			imagePath = "img" + File.separator + fileName;
-//			Shipper shipper = new Shipper( order.getOrderId(), imagePath,reason);
-//			Boolean check = ShipperDao.insertShipper_Img_Rea(shipper); // lưu lại ảnh shipper
-//			order.setOrderStatus(5);
-//			Boolean order2 = BookDao.updateOrderShipper(order); // lưu chuyển trạng thái đơn
-//			response.sendRedirect(request.getContextPath() + "/shipperHome");
-//		}
 		
 	}
 

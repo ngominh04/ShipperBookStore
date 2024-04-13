@@ -98,6 +98,21 @@ public class ShipperHomeServlet extends HttpServlet {
 					.getRequestDispatcher("/Views/shipperHome.jsp");
 			rd.forward(request, response);
 		}
+		// search theo ajax
+		String keyword = request.getParameter("keyword");
+		if ("shipperHomeSearch".equals(pathInfo)) {
+			
+			if (keyword != null) {
+				ShipperDao dao = new ShipperDao();
+				List<BookAndOrder> list = dao.listAllOrder_2_Sp(keyword);
+				
+				request.setAttribute("bookList", list);
+				request.setAttribute("keyword", keyword);
+				RequestDispatcher rd = this.getServletContext()
+						.getRequestDispatcher("/Views/searchBook.jsp");
+				rd.forward(request, response);
+			}
+		}
 		
 		
 	}
@@ -166,10 +181,12 @@ public class ShipperHomeServlet extends HttpServlet {
 			Boolean order2 = BookDao.updateOrderShipper(order); // lưu chuyển trạng thái đơn
 			response.sendRedirect(request.getContextPath() + "/shipperHome");
 		}
+		// search theo form 
 		String keyword = request.getParameter("keyword");
 		if ("shipperHomeSearch".equals(pathInfo)) {
 			if (keyword != null) {
-				BookAndOrder list = ShipperDao.listAllOrder_2_Sp(keyword);
+				ShipperDao dao = new ShipperDao();
+				List<BookAndOrder> list = dao.listAllOrder_2_Sp(keyword);
 				
 				request.setAttribute("bookList", list);
 				request.setAttribute("keyword", keyword);
@@ -177,6 +194,7 @@ public class ShipperHomeServlet extends HttpServlet {
 						.getRequestDispatcher("/Views/shipperHome.jsp");
 				rd.forward(request, response);
 			}
+
 		}
 	}
 

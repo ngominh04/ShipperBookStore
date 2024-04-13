@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import vnua.fita.bookstore.bean.BookAndOrder;
 import vnua.fita.bookstore.bean.Order;
@@ -45,15 +47,15 @@ public class ShipperDao {
 		return insertResult;
 	}
 	// order shipper có keywword
-	public static BookAndOrder listAllOrder_2_Sp(String keyword) {
+	public List<BookAndOrder> listAllOrder_2_Sp(String keyword) {
 		// cau lenh sql
-		BookAndOrder book = null;
+		List<BookAndOrder> list = new ArrayList<BookAndOrder>();
 		String sql = "select  t.order_status orderStatus, t.order_date orderDate,t.total_cost orderPrice,tb.quantity orderQuantity,t.order_no orderNo,\r\n"
 				+ "                t2.fullname fullname,t2.mobile mobile\r\n"
 				+ "from tblorder t\r\n"
 				+ "         inner join shipper_book_store.tblorder_book tb on t.order_id = tb.order_id\r\n"
 				+ "         inner join tbluser t2 on t2.username = t.customer_username\r\n"
-				+ "where t.order_no = ?";
+				+ "where t.order_no like ?";
 		// tao ket noi
 		Connection jdbcConnection = Database.getConnection();
 		try {
@@ -61,22 +63,23 @@ public class ShipperDao {
 			PreparedStatement preparedStatement = jdbcConnection.prepareStatement(sql);
 			// thuc hien truy van
 			
-			preparedStatement.setString(1, keyword); // lấy theo key
+			preparedStatement.setString(1, '%'+keyword+'%'); // lấy theo key
 			ResultSet resultSet = preparedStatement.executeQuery();
 			// duyet qua danh sach ban ghi ket qua tra ve
-			if (resultSet.next()) {
+			while (resultSet.next()) {
 				String orderNo = resultSet.getString("orderNo");
 				String fullName = resultSet.getString("fullname");
 				String mobile = resultSet.getString("mobile");
 				Float totalCost = resultSet.getFloat("orderPrice");
 				Date orderDate = resultSet.getTimestamp("orderDate");
 				int orderStatus = resultSet.getInt("orderStatus");
-				book = new BookAndOrder(orderNo, orderDate, totalCost, fullName, mobile,orderStatus);
+				BookAndOrder book = new BookAndOrder(orderNo, orderDate, totalCost, fullName, mobile,orderStatus);
+				list.add(book);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return book;
+		return list;
 	}
 	public static Shipper imgShipper(String orderNo) {
 		String sql ="select * from tblorder_shipper\r\n"

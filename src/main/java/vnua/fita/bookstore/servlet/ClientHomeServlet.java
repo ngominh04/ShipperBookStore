@@ -13,15 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 import vnua.fita.bookstore.bean.Book;
 import vnua.fita.bookstore.bean.BookAndOrder;
 import vnua.fita.bookstore.model.BookDao;
+import vnua.fita.bookstore.model.ShipperDao;
+import vnua.fita.bookstore.utils.MyUtils;
 
 /**
  * Servlet implementation class ClientHomeServlet
  */
-@WebServlet("/clientHome")
+@WebServlet(urlPatterns = {"/clientHome"})
 public class ClientHomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
       
-	private BookDao bookDao;
+//	private BookDao bookDao;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -46,17 +48,27 @@ public class ClientHomeServlet extends HttpServlet {
 		}
 		
 		String keyword = request.getParameter("keyword");
-		list = BookDao.listAllBooks((page-1)*revordsPerPage, revordsPerPage, keyword);
-		
 		int noOfRecords = BookDao.getNoOfRecords(keyword);
 		int noOfPages = (int) Math.ceil(noOfRecords*1.0/revordsPerPage);
+
+		list = BookDao.listAllBooks((page-1)*revordsPerPage, revordsPerPage,keyword);
 		
 		request.setAttribute("bookList", list);
 		request.setAttribute("noOfPages", noOfPages);
 		request.setAttribute("page", page);
 		request.setAttribute("keyword", keyword);
-		RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/Views/clientHomeView.jsp");
+		
+		if (keyword != null) {
+			RequestDispatcher rd = this.getServletContext()
+					.getRequestDispatcher("/Views/searchBookClient.jsp");
+			rd.forward(request, response);
+		}
+		else {
+			RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/Views/clientHomeView.jsp");
 		dispatcher.forward(request, response);
+		}	
+	
+		
 	}
 
 	/**
